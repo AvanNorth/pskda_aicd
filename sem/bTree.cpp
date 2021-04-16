@@ -1,4 +1,6 @@
 #include<iostream>
+#include <fstream>
+#include <ctime>
 
 using namespace std;
 
@@ -97,7 +99,7 @@ void BTreeNode::remove(int k) {
             removeFromNonLeaf(idx);
     } else {
         if (leaf) {
-            cout << "Ключа " << k << " нет в дереве\n";
+            cout << "key " << k << " not found\n";
             return;
         }
 
@@ -343,7 +345,7 @@ BTreeNode *BTreeNode::search(int k) {
 
 void BTree::remove(int k) {
     if (!root) {
-        cout << "Дерево пустое\n";
+        cout << "tree is empty\n";
         return;
     }
 
@@ -363,52 +365,52 @@ void BTree::remove(int k) {
 int main() {
     BTree t(3);
 
-    t.insert(1);
-    t.insert(3);
-    t.insert(7);
-    t.insert(10);
-    t.insert(11);
-    t.insert(13);
-    t.insert(14);
-    t.insert(15);
-    t.insert(18);
-    t.insert(16);
-    t.insert(19);
-    t.insert(24);
-    t.insert(26);
-    t.insert(21);
-    t.insert(4);
-    t.insert(5);
-    t.insert(20);
-    t.insert(22);
-    t.insert(2);
-    t.insert(17);
-    t.insert(12);
-    t.insert(6);
 
-    cout << "Обход построенного дерева\n";
-    t.traverse();
-    cout << endl;
+    for (int j = 0; j < 60; j++) {
+        int n;
+        int k;
+        int a;
+        ifstream fin("D://infa/pskda_iip/aicdTest/test" + to_string(j + 1) + ".txt");
 
-    t.remove(6);
-    cout << "Обход после удаления 6\n";
-    t.traverse();
-    cout << endl;
+        fin >> n;
 
-    t.remove(13);
-    cout << "Обход после удаления 13\n";
-    t.traverse();
-    cout << endl;
 
-    t.remove(7);
-    cout << "Обход после удаления 7\n";
-    t.traverse();
-    cout << endl;
 
-    t.remove(4);
-    cout << "Обход после удаления 4\n";
-    t.traverse();
-    cout << endl;
+        cout << "test #" << j+1 << endl;
+        cout << "n: " << n << endl;
 
+        std::clock_t start;
+        double duration;
+
+        start = clock();
+
+        for (int i = 1; i <= n; ++i) {
+            fin >> k;
+            t.insert(k);
+        }
+
+        duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
+
+        cout << "insertion time: " << duration << "s" << endl;
+
+
+        fin >> a;
+
+        cout << "age to found: " << a << endl;
+
+
+
+        start = clock();
+
+        int answer = reinterpret_cast<int>(t.search(a));
+
+        duration = ( clock() - start ) / (double) CLOCKS_PER_SEC;
+        cout << "find time: " << duration << "s" <<endl;
+
+
+        if (answer != 0)
+        cout << "answer: found" << endl << endl;
+        else cout << "answer: not found" << endl << endl;
+    }
     return 0;
 }

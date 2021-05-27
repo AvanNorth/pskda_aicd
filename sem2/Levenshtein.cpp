@@ -1,4 +1,6 @@
 #include<iostream>
+#include <ctime>
+#include <fstream>
 
 using namespace std;
 
@@ -40,13 +42,30 @@ int main() {
     string s1;
     string s2;
 
-    setlocale(LC_CTYPE, "rus");
+    for (int i = 0; i < 60; i++) {
+        int n;
 
-    cout << "Первое слово: ";
-    cin >> s1;
+        ifstream fin("D://infa/pskda_aicd/sem2/tests/test" + to_string(i + 1) + ".txt");
 
-    cout << "Второе слово: ";
-    cin >> s2;
+        fin >> n;
 
-    cout << "Расстояние Левенштейна: " << LevenshteinDistance(s1, s2);
+        cout << "******************************" << endl;
+        cout << "test #" << i + 1 << endl;
+        cout << "n: " << n << endl;
+
+        string word1;
+        string word2;
+
+        fin >> word1;
+        fin >> word2;
+
+        std::clock_t start;
+        double duration;
+        start = clock();
+
+        cout << "Levenshtein distance is: " << LevenshteinDistance(word1, word2) << endl;
+
+        duration = (clock() - start) / (double) CLOCKS_PER_SEC;
+        cout << "time: " << duration << "s" << endl;
+    }
 }
